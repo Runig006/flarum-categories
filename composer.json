@@ -1,6 +1,7 @@
 {
   "name": "askvortsov/flarum-categories",
   "description": "Traditional Category Layout for Flarum",
+  "version": "1.0.0",
   "keywords": [
     "flarum"
   ],
@@ -33,8 +34,8 @@
       "category": "theme",
       "icon": {
         "name": "fas fa-th-list",
-        "backgroundColor": "#6932D1",
-        "color": "#fff"
+        "backgroundColor": "#ff7700",
+        "color": "#ffffff"
       }
     }
   }

@@ -94,32 +94,8 @@ export default class Category extends Component<Attrs> {
     const tag = this.tag;
     const children = this.isChild ? [] : sortTags(tag.children() || []);
 
-    items.add('alignStart', <div className="TagCategory-alignStart">{this.alignStartItems().toArray()}</div>, 100);
-
-    items.add('alignEnd', <div className="TagCategory-alignEnd">{this.alignEndItems().toArray()}</div>, 50);
-
+    items.add('top', <div className="TagCategory-top">{this.topItems().toArray()}</div>, 100);
     const childrenInContent = !this.isChild && this.compactMobileMode;
-
-    if (childrenInContent && !this.collapsed) {
-      items.add(
-        'children',
-        <ol className="TagCategory-subTagList">{children.map((child) => [Category.component({ model: child, parent: this })])}</ol>,
-        10
-      );
-    }
-
-    return items;
-  }
-
-  alignStartItems() {
-    const items = new ItemList();
-
-    const tag = this.tag;
-    const children = this.isChild ? [] : sortTags(tag.children() || []);
-
-    items.add('icon', <span className="TagCategory-icon">{this.iconItems().toArray()}</span>, 100);
-
-    items.add('main', <div className="TagCategory-main">{this.mainItems().toArray()}</div>, 50);
 
     if (!!children.length) {
       items.add(
@@ -136,22 +112,35 @@ export default class Category extends Component<Attrs> {
       );
     }
 
+
+    if (childrenInContent && !this.collapsed) {
+      items.add(
+        'children',
+        <ol className="TagCategory-subTagList">{children.map((child) => [Category.component({ model: child, parent: this })])}</ol>,
+        10
+      );
+    }
+
     return items;
   }
 
-  alignEndItems() {
+  topItems() {
     const items = new ItemList();
-
     const tag = this.tag;
+    const children = this.isChild ? [] : sortTags(tag.children() || []);
 
-    items.add('stats', <div className="TagCategory-stats StatWidgetList">{this.statItems().toArray()}</div>, 100);
-
-    items.add(
-      'lastDiscussion',
-      <div className={classList('TagCategory-lastDiscussion', { empty: !tag.lastPostedDiscussion() })}>{this.lastDiscussionItems().toArray()}</div>,
-      50
-    );
-
+    items.add('identity',
+      <div class="TagCategory-identity">
+        <span className="TagCategory-icon">{this.iconItems().toArray()}</span>
+        <div className="TagCategory-name">{this.nameItems().toArray()}</div>
+      </div>
+      , 100);
+    items.add('stats', <div className="TagCategory-stats StatWidgetList">{this.statItems().toArray()}</div>, 50);
+    items.add('lastDiscussion',
+      <div className={classList('TagCategory-lastDiscussion', { empty: !tag.lastPostedDiscussion() })}>
+        {this.lastDiscussionItems().toArray()}
+      </div>,
+      50);
     return items;
   }
 
@@ -189,15 +178,9 @@ export default class Category extends Component<Attrs> {
     return items;
   }
 
-  mainItems() {
+  nameItems() {
     const items = new ItemList();
-
     items.add('name', <h4 className="TagCategory-name">{this.tag.name()}</h4>, 15);
-
-    if (this.tag.description() && (this.isChild || !app.forum.attribute('categories.parentRemoveDescription'))) {
-      items.add('description', <div className="TagCategory-description">{this.tag.description()}</div>, 10);
-    }
-
     return items;
   }
 

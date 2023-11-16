@@ -60,6 +60,7 @@ export default class LastDiscussionWidget extends Component<Attrs> {
     items.add(
       'mainContent',
       <div class="LastDiscussion-content">
+        <div class="LastDiscussion-topRow">{truncate(discussion.title(), 26)}</div>
         <div class="LastDiscussion-bottomRow">
           {humanTime(discussion.lastPostedAt()!)}{' '}
           <Link className="LastDiscussion-usernameLink" href={user ? app.route.user(user) : '#'}>
@@ -69,7 +70,6 @@ export default class LastDiscussionWidget extends Component<Attrs> {
             {username(user)}
           </Link>
         </div>
-        <div class="LastDiscussion-topRow">{truncate(discussion.title(), 26)}</div>
       </div>,
       50
     );

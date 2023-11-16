@@ -87,13 +87,14 @@ export default class CategoriesPage extends Page {
     items.add(
       'categoriesList',
       <div className="CategoriesPage-content sideNavOffset">
+        {cloud.length ? <div className="TagCloud">{cloud.map((tag) => [tagLabel(tag, { link: true }), ' '])}</div> : ''}
         <ol className="TagCategoryList">
           {pinned.map((tag) => {
             return Category.component({ model: tag });
           })}
         </ol>
 
-        {cloud.length ? <div className="TagCloud">{cloud.map((tag) => [tagLabel(tag, { link: true }), ' '])}</div> : ''}
+        
       </div>,
       50
     );

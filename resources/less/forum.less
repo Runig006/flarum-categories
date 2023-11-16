@@ -1,5 +1,4 @@
 // Variables
-
 @categories-color-white: darken(#fff, 2%);
 @categories-color-white-slightly-muted: darken(@categories-color-white, 5%);
 @categories-color-white-muted: darken(@categories-color-white, 11%);
@@ -16,16 +15,16 @@
 @categories-sub-dark-color-more-muted: darken(@categories-color-white, 25%);
 
 .define-colors(@config-dark-mode);
+
 .define-colors(false) {
   @categories-sub-color-background: darken(#fff, 10%);
   @categories-sub-color-background-hover: darken(#fff, 15%);
   @categories-sub-color-highlighted: lighten(#000, 5%);
   @categories-sub-color-muted: lighten(@categories-sub-color-highlighted, 30%);
-  @categories-sub-color-more-muted: lighten(
-    @categories-sub-color-highlighted,
-    75%
-  );
+  @categories-sub-color-more-muted: lighten(@categories-sub-color-highlighted,
+    75%);
 }
+
 .define-colors(true) {
   @categories-sub-color-background: @categories-sub-dark-color-background;
   @categories-sub-color-background-hover: @categories-sub-dark-color-background-hover;
@@ -50,63 +49,131 @@
   }
 }
 
+.TagCategoryList {
+  padding-left: 0;
+  margin-top: 0;
+
+  display: grid;
+
+  grid-template-columns: repeat(1, 1fr);
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+  grid-auto-flow: row dense;
+  align-items: start;
+
+  @media @tablet-up{
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 // Systems
 .TagCategory {
   list-style: none;
   color: @categories-color-white;
 
+
   .TagCategory-content {
-    padding: 15px 20px;
-    border-radius: 6px;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    background-color: @primary-color;
+    padding: 5px 3px;
+
+    border-radius: 6px;
     text-decoration: none !important;
+
+    background-color: @primary-color;
+
     color: @categories-color-highlighted;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.18),
-      0 3px 10px 0 rgba(0, 0, 0, 0.15);
 
-    .TagCategory-alignStart,
-    .TagCategory-alignStart-main,
-    .TagCategory-alignEnd {
+
+    .TagCategory-top {
       display: flex;
+      justify-content: space-around;
       align-items: center;
+      padding: 15px 20px;
+
+      .TagCategory-identity {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 10%;
+
+        .TagCategory-name {
+          align-items: center;
+          margin-top: 0px;
+          margin-bottom: 0px;
+
+          text-align: center;
+        }
+      }
+
+      .TagCategory-stats {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 30%;
+
+        .StatWidget {
+          display: flex;
+          justify-content: center;
+
+          .StatWidget-count {
+            font-weight: bold;
+            margin-right: 5px;
+          }
+
+          .StatWidget-label {
+            color: @categories-color-white-muted;
+          }
+        }
+      }
+
+      .TagCategory-lastDiscussion {
+
+        width: 50%;
+
+        .LastDiscussion {
+          display: flex;
+          align-items: center;
+          color: @categories-color-highlighted;
+          --link-color: @categories-color-highlighted;
+
+          .LastDiscussion-content {
+            margin-left: 5px;
+          }
+
+          .LastDiscussion-userCardContainer {
+            display: block;
+            position: relative;
+
+            .UserCard {
+              position: absolute;
+              top: -20px;
+              left: -200px;
+              z-index: 1030;
+              -webkit-transition: opacity 0.2s, transform 0.2s;
+              -o-transition: opacity 0.2s, transform 0.2s;
+              transition: opacity 0.2s, transform 0.2s;
+              transform: scale(0.95);
+              transform-origin: left top;
+              opacity: 1;
+            }
+          }
+        }
+      }
     }
 
-    .TagCategory-toggleArrow {
-      display: none;
+    .TagCategory-toggleArrow{
+      text-align: center;
+      font-size: 1.4rem;
+      line-height: 0px;
     }
 
-    .TagCategory-icon,
-    .TagCategory-main,
-    .TagCategory-stats,
-    .TagCategory-lastDiscussion {
+    .TagCategory-subTagList {
       display: flex;
-    }
-
-    .TagCategory-icon,
-    .TagCategory-stats,
-    .TagCategory-lastDiscussion {
-      align-items: center;
-    }
-
-    .TagCategory-main {
       flex-direction: column;
-      text-align: left;
-      justify-content: center;
-      overflow: hidden;
-
-      .TagCategory-name {
-        display: block;
-        margin: 0;
-        font-size: 20px;
-      }
-
-      .TagCategory-description {
-        margin-top: 0.5em;
-        color: @categories-color-muted;
-        overflow-wrap: break-word;
-      }
+      padding-left: 0px;
     }
 
     &.hover:hover {
@@ -115,40 +182,20 @@
   }
 }
 
-.TagCategoryList {
-  padding-left: 0;
-  margin-top: 0;
-
-  > .TagCategory {
-    margin-bottom: 25px;
-  }
-}
-
-.TagCategory-subTagList {
-  display: flex;
-  flex-direction: column;
-}
-
 .TagCategory.SubCategory {
+  margin-top: 4px;
+
   .TagCategory-content {
     color: @categories-sub-color-highlighted;
-    padding: 10px 20px;
-    margin: 5px 0;
     background-color: @categories-sub-color-background;
-    box-shadow: 0 2px 4px 0em rgba(0, 0, 0, 0.04),
-      0 3px 10px 0 rgba(0, 0, 0, 0.07);
 
     .TagCategory-main .TagCategory-description {
       color: @categories-sub-color-muted;
     }
 
-    .TagCategory-name {
-      font-size: 18px;
-    }
-
     .TagCategory-icon {
       .CategoryIcon {
-        color: @categories-sub-color-background;
+        color: @categories-sub-color-highlighted;
       }
 
       .CategoryIcon.NoBackgroundCategoryIcon {
@@ -160,342 +207,20 @@
       background-color: @categories-sub-color-background-hover;
     }
   }
-
-  &:first-child {
-    margin-top: 10px;
-  }
-  &:last-child {
-    border-bottom: none;
-  }
 }
 
-.StatWidgetList {
-  display: flex;
-
-  > .StatWidget {
-    border-right: 2px solid @categories-color-white-more-muted;
-    display: flex;
-    padding: 0 10px;
-    align-items: center;
-
-    > div {
-      display: flex;
-    }
-
-    &:last-child {
-      border-right: none !important;
-    }
-
-    .StatWidget-count {
-      font-weight: 550;
-    }
-
-    .StatWidget-label {
-      color: @categories-color-white-muted;
-    }
-  }
+.TagCloud{
+  margin-top: 30px;
+  margin-bottom: 20px;
 }
 
-.TagCategory.SubCategory {
-  .StatWidget {
-    border-right: 2px solid @categories-sub-color-more-muted;
-    display: flex;
-  }
-  .StatWidget-label {
-    color: @categories-sub-color-muted;
-  }
+//Hide Nav
+.CategoriesPage .CategoriesPage-nav {
+  display: none !important;
 }
 
-.TagCategory-lastDiscussion.empty .LastDiscussion {
-  font-weight: 550;
-}
-
-.LastDiscussion {
-  display: flex;
-  align-items: center;
-  color: @categories-color-highlighted;
-
-  .LastDiscussion-userCardContainer {
-    display: block;
-    position: relative;
-  }
-
-  .UserCard {
-    position: absolute;
-    top: -20px;
-    left: -200px;
-    z-index: 1030;
-    -webkit-transition: opacity 0.2s, transform 0.2s;
-    -o-transition: opacity 0.2s, transform 0.2s;
-    transition: opacity 0.2s, transform 0.2s;
-    transform: scale(0.95);
-    transform-origin: left top;
-    opacity: 1;
-  }
-
-  &:hover {
-    text-decoration: none;
-
-    .LastDiscussion-topRow {
-      text-decoration: underline;
-    }
-    .LastDiscussion-bottomRow:hover ~ .LastDiscussion-topRow {
-      text-decoration: none !important;
-    }
-
-    .LastDiscussion-avatar:hover
-      ~ .LastDiscussion-content
-      .LastDiscussion-topRow {
-      text-decoration: none !important;
-    }
-  }
-
-  .LastDiscussion-content,
-  .LastDiscussion-topRow,
-  .LastDiscussion-bottomRow {
-    display: flex;
-  }
-
-  .LastDiscussion-topRow {
-    color: @categories-color-white;
-    font-weight: 550;
-  }
-
-  .LastDiscussion-bottomRow {
-    color: @categories-color-white-muted;
-
-    .LastDiscussion-usernameLink,
-    .username,
-    time {
-      display: contents;
-    }
-
-    .LastDiscussion-usernameLink {
-      color: @categories-color-white-muted;
-    }
-  }
-}
-
-.TagCategory.SubCategory {
-  .TagCategory-lastDiscussion.empty {
-    .LastDiscussion {
-      color: @categories-sub-color-highlighted;
-    }
-  }
-  .LastDiscussion {
-    .LastDiscussion-topRow {
-      color: @categories-sub-color-highlighted;
-    }
-    .LastDiscussion-bottomRow {
-      color: @categories-sub-color-muted;
-      .LastDiscussion-usernameLink {
-        color: @categories-sub-color-muted;
-      }
-    }
-  }
-}
-
-@media @phone {
-  .TagCategory-content {
-    flex-direction: column;
-  }
-
-  .TagCategory-alignEnd {
-    flex-direction: column;
-    margin-top: 25px;
-  }
-
-  .StatWidget {
-    flex-direction: row;
-    .StatWidget-count {
-      margin-right: 4px;
-    }
-  }
-
-  .TagCategory-lastDiscussion {
-    border-top: 1px solid rgba(0, 0, 0, 0.15);
-    margin-top: 10px;
-    padding: 7px 0;
-  }
-
-  .LastDiscussion-avatar {
+@media @phone{
+  .LastDiscussion-avatar{
     display: none;
-  }
-
-  .LastDiscussion-content {
-    flex-direction: row-reverse;
-  }
-
-  .LastDiscussion-topRow {
-    margin-right: 5px;
-  }
-
-  .TagCategory-icon,
-  .TagCategory-main,
-  .TagCategory-stats {
-    padding: 0 15px 0 0px;
-  }
-
-  .LastDiscussion .UserCard {
-    display: none;
-  }
-}
-
-@media @tablet-up {
-  .TagCategory-content {
-    flex-direction: row;
-  }
-
-  .TagCategory-alignEnd {
-    flex-direction: row;
-  }
-  .TagCategory-alignStart {
-    max-width: 50%;
-    margin-bottom: 0;
-  }
-
-  .TagCategory.SubCategory {
-    .TagCategory-alignStart {
-      max-width: 40%;
-    }
-  }
-
-  .StatWidget {
-    flex-direction: column;
-    .StatWidget-count {
-      margin-right: 0;
-    }
-  }
-
-  .TagCategory-lastDiscussion {
-    border-top: none;
-    margin-top: 0;
-    padding: 0 15px;
-  }
-
-  .LastDiscussion-avatar {
-    display: block;
-    padding-right: 10px;
-  }
-
-  .LastDiscussion-content {
-    flex-direction: column-reverse;
-  }
-
-  .TagCategory-icon,
-  .TagCategory-main,
-  .TagCategory-stats {
-    padding: 0 15px;
-  }
-
-  .TagCategory-lastDiscussion.empty {
-    justify-content: center;
-  }
-
-  .TagCategory-lastDiscussion {
-    width: 280px;
-  }
-
-  .TagCategory.SubCategory .TagCategory-lastDiscussion {
-    width: 250px;
-  }
-}
-
-@media @phone {
-  .TagCategoryList > .TagCategory.compactMobile {
-    margin-bottom: 15px;
-  }
-
-  .compactMobile {
-    .TagCategory-description {
-      display: none;
-    }
-    &.hover:hover {
-      opacity: 90%;
-    }
-  }
-
-  .ParentCategory.compactMobile {
-    > .TagCategory-content {
-      padding: 10px 15px;
-
-      > :nth-child(1) {
-        order: 1;
-      }
-      > :nth-child(2) {
-        order: 3;
-      }
-      > :nth-child(3) {
-        order: 2;
-      }
-
-      .TagCategory-alignStart {
-        justify-content: space-between;
-      }
-
-      .TagCategory-toggleArrow {
-        display: flex;
-        font-size: 30px;
-        margin-right: 20px;
-        &.hover:hover {
-          opacity: 50%;
-        }
-      }
-
-      > .TagCategory-alignEnd {
-        margin-top: 0;
-        flex-direction: row-reverse;
-        justify-content: space-around;
-        align-content: center;
-        padding-top: 5px;
-        border-top: 1px solid black;
-
-        .TagCategory-lastDiscussion {
-          margin-top: 0;
-          border-top: 0;
-
-          .LastDiscussion-usernameLink {
-            display: none;
-          }
-        }
-      }
-      .TagCategory-subTagList {
-        > :last-child {
-          margin-bottom: 10px;
-        }
-      }
-    }
-  }
-
-  .SubCategory.compactMobile {
-    .TagCategory-content {
-      flex-direction: row;
-      padding: 7px 15px;
-      background-color: fade(@categories-sub-color-background, 65%);
-    }
-    .TagCategory-name {
-      font-size: 16px;
-    }
-
-    .TagCategory-toggleArrow {
-      display: none !important;
-    }
-
-    .TagCategory-alignEnd {
-      margin-top: 0;
-      justify-content: center;
-      border-top: 0;
-
-      .TagCategory-lastDiscussion {
-        display: none;
-      }
-    }
-    .StatWidgetList {
-      display: flex;
-
-      > .StatWidget {
-        border-right: 2px solid @categories-color-white-more-muted;
-      }
-    }
   }
 }
