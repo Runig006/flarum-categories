@@ -112,7 +112,6 @@ export default class Category extends Component<Attrs> {
       );
     }
 
-
     if (childrenInContent && !this.collapsed) {
       items.add(
         'children',
@@ -129,18 +128,20 @@ export default class Category extends Component<Attrs> {
     const tag = this.tag;
     const children = this.isChild ? [] : sortTags(tag.children() || []);
 
-    items.add('identity',
+    items.add(
+      'identity',
       <div class="TagCategory-identity">
         <span className="TagCategory-icon">{this.iconItems().toArray()}</span>
         <div className="TagCategory-name">{this.nameItems().toArray()}</div>
-      </div>
-      , 100);
-    items.add('stats', <div className="TagCategory-stats StatWidgetList">{this.statItems().toArray()}</div>, 50);
-    items.add('lastDiscussion',
-      <div className={classList('TagCategory-lastDiscussion', { empty: !tag.lastPostedDiscussion() })}>
-        {this.lastDiscussionItems().toArray()}
       </div>,
-      50);
+      100
+    );
+    items.add('stats', <div className="TagCategory-stats StatWidgetList">{this.statItems().toArray()}</div>, 50);
+    items.add(
+      'lastDiscussion',
+      <div className={classList('TagCategory-lastDiscussion', { empty: !tag.lastPostedDiscussion() })}>{this.lastDiscussionItems().toArray()}</div>,
+      50
+    );
     return items;
   }
 

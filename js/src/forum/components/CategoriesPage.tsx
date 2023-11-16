@@ -93,8 +93,6 @@ export default class CategoriesPage extends Page {
             return Category.component({ model: tag });
           })}
         </ol>
-
-        
       </div>,
       50
     );
