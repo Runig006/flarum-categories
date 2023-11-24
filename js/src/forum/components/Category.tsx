@@ -30,7 +30,7 @@ export default class Category extends Component<Attrs> {
 
     this.isChild = this.attrs.parent != null && this.attrs.parent != undefined;
 
-    this.collapsed = false;
+    this.collapsed = this.getTag(this.tag.slug());
 
     window.addEventListener('resize', function () {
       m.redraw();
@@ -258,6 +258,20 @@ export default class Category extends Component<Attrs> {
     e.preventDefault();
     e.stopPropagation();
     this.collapsed = !this.collapsed;
+    this.saveTag(this.tag.slug(), this.collapsed);
     m.redraw();
+  }
+
+  getTag(slug: string) {
+    let json = localStorage.getItem('tags-collapsed') ?? "{}";
+    json = JSON.parse(json);
+    return json[slug] ?? false;
+  }
+
+  saveTag(slug: string, status: boolean) {
+    let json = localStorage.getItem('tags-collapsed') ?? "{}";
+    json = JSON.parse(json);
+    json[slug] = status;
+    localStorage.setItem('tags-collapsed', JSON.stringify(json));
   }
 }
